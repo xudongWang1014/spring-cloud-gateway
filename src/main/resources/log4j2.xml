@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <properties>
+        <!-- File base path -->
+        <property name="LOG_HOME">logs</property>
+        <!-- App server name -->
+        <property name="SERVER_NAME">spring-cloud-gateway</property>
+    </properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} %highlight{[%t]} %-5p %c:%L %highlight{[%-5level]} - %m%n%highlight{%throwable}" disableAnsi="false" noConsoleNoAnsi="false"/>
+        </Console>
+        <RollingFile name="InfoRollingFile" fileName="${LOG_HOME}/${SERVER_NAME}-info.log"
+                     filePattern="${LOG_HOME}/${SERVER_NAME}-info-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} %highlight{[%t]} %-5p %c:%L %highlight{[%-5level]} - %m%n%highlight{%throwable}" disableAnsi="false" noConsoleNoAnsi="false"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="WarnRollingFile" fileName="${LOG_HOME}/${SERVER_NAME}-warn.log"
+                     filePattern="${LOG_HOME}/${SERVER_NAME}-warn-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} %highlight{[%t]} %-5p %c:%L %highlight{[%-5level]} - %m%n%highlight{%throwable}" disableAnsi="false" noConsoleNoAnsi="false"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="ErrorRollingFile" fileName="${LOG_HOME}/${SERVER_NAME}-error.log"
+                     filePattern="${LOG_HOME}/${SERVER_NAME}-error-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss:SSS} %highlight{[%t]} %-5p %c:%L %highlight{[%-5level]} - %m%n%highlight{%throwable}" disableAnsi="false" noConsoleNoAnsi="false"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <root level="info">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="InfoRollingFile"/>
+            <appender-ref ref="WarnRollingFile"/>
+            <appender-ref ref="ErrorRollingFile"/>
+        </root>
+    </loggers>
+</configuration>
